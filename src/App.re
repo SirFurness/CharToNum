@@ -2,32 +2,14 @@ open Revery;
 open Revery.UI;
 open Revery.UI.Components;
 
-module Styles = {
-  open Style;
-
-  let text = [marginTop(24), color(Color.hex(Theme.darkBlue))];
-};
-
-let%component main = () => {
-  let%hook (count, setCount) = React.Hooks.state(0);
-
-  let increment = () => setCount(count => count + 1);
-
-  <Center>
-    <Padding padding=24>
-      <Row>
-        <AnimatedText delay={Time.ms(0)} text="Welcome" />
-        <AnimatedText delay={Time.ms(500)} text="to" />
-        <AnimatedText delay={Time.ms(1000)} text="Revery" />
-      </Row>
-    </Padding>
-    <SimpleButton text="Increment" onClick=increment />
+let main = () => {
+  <View style=Style.[alignItems(`Center)]>
     <Text
-      fontSize=16.
-      style=Styles.text
-      text={"Times clicked: " ++ string_of_int(count)}
+      text="Type the corresponding number (1-26)"
+      fontSize=20.
+      style=Style.[marginTop(10)]
     />
-  </Center>;
+  </View>;
 };
 
 let init = app => {
@@ -36,18 +18,7 @@ let init = app => {
   Timber.App.enable();
   Timber.App.setLevel(Timber.Level.perf);
 
-  let win =
-    App.createWindow(
-      app,
-      "Hello Revery!",
-      ~createOptions=
-        WindowCreateOptions.create(
-          ~backgroundColor=Color.hex(Theme.lightBlue),
-          ~width=512,
-          ~height=384,
-          (),
-        ),
-    );
+  let win = App.createWindow(app, "CharToNum");
 
   let _update: Revery.UI.renderFunction = UI.start(win, <main />);
   ();
