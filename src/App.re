@@ -19,20 +19,16 @@ let%component main = () => {
       }
     });
 
-  let%hook (letter, setLetter) = Hooks.state("A");
-  let%hook (number, setNumber) = Hooks.state(None);
-
-  let numberAsString = (number) => {
-    switch(number) {
-    | None => ""
-    | Some(num) => string_of_int(num)
-    }
+  let getRandomLetter = () => {
+    String.make(1, Char.chr(Random.int(26)+Char.code('A')));
   };
+  let%hook (letter, setLetter) = Hooks.state(getRandomLetter());
+  let%hook (number, setNumber) = Hooks.state(None);
 
   let currentUI =
     switch (state) {
     | StartMenu => <StartMenu start={() => dispatch(Start)} />
-    | CharToNum => <CharToNum letter number=numberAsString(number) />
+    | CharToNum => <CharToNum letter number />
     | GameOver => <GameOver restart={() => dispatch(Start)} />
     };
 
@@ -51,8 +47,7 @@ let%component main = () => {
     number == letterNumber;
   };
   let nextLetter = () => {
-    let randomLetter = Char.chr(Random.int(26)+Char.code('A'));
-    setLetter(_ => String.make(1, randomLetter));
+    setLetter(_ => getRandomLetter());
   };
 
   let newNumber = (digit) => {
@@ -114,6 +109,8 @@ let%component main = () => {
 };
 
 let init = app => {
+  Random.self_init();
+  
   let win = App.createWindow(app, "CharToNum");
 
   let _update: Revery.UI.renderFunction = UI.start(win, <main />);
