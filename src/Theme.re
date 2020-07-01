@@ -1,2 +1,4 @@
-let lightBlue = "#F6F9FF";
-let darkBlue = "#2667FF";
+open Revery;
+
+let appBackground = Color.hex("#282625");
+let textColor = Colors.black;
