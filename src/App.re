@@ -23,7 +23,7 @@ let%component main = () => {
     switch (state) {
     | StartMenu => <StartMenu start={() => dispatch(Start)} />
     | CharToNum => <CharToNum stop={() => dispatch(Stop)} />
-    | GameOver => <View></View>
+    | GameOver => <GameOver restart={() => dispatch(Start)} />
     };
 
   <View style=Style.[
