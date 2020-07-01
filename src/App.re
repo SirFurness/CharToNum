@@ -22,7 +22,7 @@ let%component main = () => {
   let currentUI =
     switch (state) {
     | StartMenu => <StartMenu start={() => dispatch(Start)} />
-    | CharToNum => <View></View>
+    | CharToNum => <CharToNum stop={() => dispatch(Stop)} />
     | GameOver => <View></View>
     };
 
@@ -32,7 +32,7 @@ let%component main = () => {
     bottom(0),
     left(0),
     right(0),
-    backgroundColor(Theme.gray),
+    backgroundColor(Theme.background),
   ]>
     currentUI
   </View>;
