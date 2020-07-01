@@ -4,16 +4,23 @@ open Revery.UI.Components;
 
 type state =
   | StartMenu
+  | Countdown
   | CharToNum
   | GameOver;
 type action =
+  | Countdown
   | Start
   | Stop;
 
+type countdownAction =
+  | Reset
+  | Countdown;
+
 let%component main = () => {
   let%hook (state, dispatch) =
-    Hooks.reducer(~initialState=StartMenu, (action, _state) => {
+    Hooks.reducer(~initialState=StartMenu, (action: action, _state) => {
       switch (action) {
+      | Countdown => Countdown
       | Start => CharToNum
       | Stop => GameOver
       }
@@ -64,11 +71,26 @@ let%component main = () => {
     dispatch(Start);
   };
 
+  let%hook (count, dispatchCount) = Hooks.reducer(~initialState=3, (action, state) => {
+    switch(action) {
+    | Reset => 3
+    | Countdown => state-1
+    }
+  });
+  let countdown = (_delta) => {
+    dispatchCount(Countdown);
+  };
+  let startCountdown = () => {
+    dispatchCount(Reset);
+    dispatch(Countdown);
+  };
+
   let currentUI =
     switch (state) {
-    | StartMenu => <StartMenu start />
+    | StartMenu => <StartMenu start=startCountdown />
+    | Countdown => <Countdown count countdown start />
     | CharToNum => <CharToNum letter number length/>
-    | GameOver => <GameOver score bestScore restart=start/>
+    | GameOver => <GameOver score bestScore restart=startCountdown/>
     };
 
   let isZeroBased = false;
@@ -129,6 +151,14 @@ let%component main = () => {
     });
   };
 
+  let onKey = () => {
+    switch(state) {
+    | GameOver
+    | StartMenu => startCountdown()
+    | _ => ()
+    } 
+  };
+
   <View 
     style=Style.[
     position(`Absolute),
@@ -138,7 +168,7 @@ let%component main = () => {
     right(0),
     backgroundColor(Theme.background),
   ]>
-    <KeyboardInput onDigit onDelete />
+    <KeyboardInput onDigit onDelete onKey />
     currentUI
   </View>;
 };
