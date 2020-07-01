@@ -22,14 +22,53 @@ let%component main = () => {
   let getRandomLetter = () => {
     String.make(1, Char.chr(Random.int(26)+Char.code('A')));
   };
+  
   let%hook (letter, setLetter) = Hooks.state(getRandomLetter());
+  let nextLetter = () => {
+    setLetter(_ => getRandomLetter());
+  };
+
+  let%hook (score, setScore) = Hooks.state(0);
+  let%hook (bestScore, setBestScore) = Hooks.state(0);
+  
+  let stop = () => {
+    if(score > bestScore) {
+      setBestScore(_ => score);
+    }
+    dispatch(Stop);
+  };
+  
   let%hook (number, setNumber) = Hooks.state(None);
+  let initialDuration = 5000.;
+  let%hook (duration, setDuration) = Hooks.state(initialDuration);
+  let%hook (length, _animState, resetAnim) = Hooks.animation(Animation.(animate(Time.ms(int_of_float(duration))) |> tween(0., 1.0)), ~active=true, ~onComplete=() => {
+    switch(state) {
+    | CharToNum => stop()
+    | _ => ()
+    }
+  });
+
+  let next = () => {
+    resetAnim();
+    nextLetter();
+    setNumber(_ => None);
+    setDuration(prev => prev *. 0.9);
+    setScore(prev => prev+1);
+  }
+  let start = () => {
+    next();
+
+    setDuration(_ => initialDuration);
+    setScore(_ => 0);
+
+    dispatch(Start);
+  };
 
   let currentUI =
     switch (state) {
-    | StartMenu => <StartMenu start={() => dispatch(Start)} />
-    | CharToNum => <CharToNum letter number />
-    | GameOver => <GameOver restart={() => dispatch(Start)} />
+    | StartMenu => <StartMenu start />
+    | CharToNum => <CharToNum letter number length/>
+    | GameOver => <GameOver score bestScore restart=start/>
     };
 
   let isZeroBased = false;
@@ -46,9 +85,6 @@ let%component main = () => {
   let isCorrectNumber = (number) => {
     number == letterNumber;
   };
-  let nextLetter = () => {
-    setLetter(_ => getRandomLetter());
-  };
 
   let newNumber = (digit) => {
     switch(number) {
@@ -63,14 +99,14 @@ let%component main = () => {
       }
     }
   }
+  
   let onDigit = (digit) => {
     switch(state) {
     | CharToNum =>
       let num = newNumber(digit);
 
       if(isCorrectNumber(num)) {
-        nextLetter();
-        setNumber(_ => None);
+        next();
       }
       else {
         setNumber(_ => Some(num));
@@ -94,7 +130,6 @@ let%component main = () => {
   };
 
   <View 
-    onKeyDown={(_e) => print_endline("key")}
     style=Style.[
     position(`Absolute),
     top(0),

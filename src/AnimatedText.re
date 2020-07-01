@@ -5,12 +5,12 @@ module Styles = {
   open Style;
 
   let text = (~yOffset) => [
-    color(Color.hex(Theme.darkBlue)),
+    //color(Color.hex(Theme.darkBlue)),
     transform([Transform.TranslateY(yOffset)]),
   ];
 };
 
-let%component make = (~delay: Time.t, ~text: string, ()) => {
+let%component make = (~delay: Time.t, ~text: string, ~fontSize, ~style, ()) => {
   let%hook (yOffset, _state, _reset) =
     Hooks.animation(
       Animation.animate(Time.ms(500))
@@ -28,8 +28,6 @@ let%component make = (~delay: Time.t, ~text: string, ()) => {
     );
 
   <Opacity opacity=animatedOpacity>
-    <Padding padding=6>
-      <Text fontSize=16. style={Styles.text(~yOffset)} text />
-    </Padding>
+    <Text fontSize style text />
   </Opacity>;
 };
