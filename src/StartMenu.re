@@ -3,8 +3,9 @@ open Revery.UI;
 open Revery.UI.Components;
 
 let make = (~start, ()) => {
-  <View>
-    <Text text="StartMenu" />
-    <Button title="click" onClick=start/>
-  </View>
+  <Center>
+    <Clickable onClick=start>
+      <Text text="Start" fontSize=80. style=Style.[color(Theme.blue)] />
+    </Clickable>
+  </Center>;
 };

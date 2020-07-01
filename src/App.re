@@ -32,7 +32,7 @@ let%component main = () => {
     bottom(0),
     left(0),
     right(0),
-    backgroundColor(Theme.appBackground)
+    backgroundColor(Theme.gray),
   ]>
     currentUI
   </View>;
