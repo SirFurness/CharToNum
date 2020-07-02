@@ -75,6 +75,7 @@ let%component main = () => {
 
   // The time the user has to guess
   let initialDuration = 5000.;
+  let endDuration = 500.;
   let%hook (duration, setDuration) = Hooks.state(initialDuration);
   let%hook (length, _animState, resetAnim) =
     Hooks.animation(
@@ -93,8 +94,8 @@ let%component main = () => {
     resetAnim();
     nextLetter();
     setNumber(_ => None);
-    // Decrease duration by 10%
-    setDuration(prev => prev *. 0.9);
+    // Decrease duration by 10% until at 500 ms
+    setDuration(prev => max(endDuration, prev *. 0.9));
     setScore(prev => prev + 1);
   };
   let start = () => {
