@@ -150,8 +150,9 @@ let%component main = () => {
     | _ => ()
     };
   };
-  let onKey = () => {
+  let onStartKey = () => {
     switch (state) {
+    | GameOver
     | StartMenu => startCountdown()
     | _ => ()
     };
@@ -174,7 +175,7 @@ let%component main = () => {
       right(0),
       backgroundColor(Theme.background),
     ]>
-    <KeyboardInput onDigit onDelete onKey />
+    <KeyboardInput onDigit onDelete onStartKey />
     currentUI
   </View>;
 };

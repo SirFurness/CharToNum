@@ -17,7 +17,7 @@ let reducer = (action, state) =>
   | SetRef(v) => {...state, ref: Some(v)}
   };
 
-let%component make = (~onDigit, ~onDelete, ~onKey, ()) => {
+let%component make = (~onDigit, ~onDelete, ~onStartKey, ()) => {
   let%hook (v, dispatch) =
     Hooks.reducer(~initialState={ref: None, hasFocus: false}, reducer);
 
@@ -50,9 +50,9 @@ let%component make = (~onDigit, ~onDelete, ~onKey, ()) => {
     } else if (event.keycode == Key.Keycode.delete
                || event.keycode == Key.Keycode.backspace) {
       onDelete();
+    } else if (event.keycode == Key.Keycode.space || event.keycode == Key.Keycode.return) {
+      onStartKey();
     };
-
-    onKey();
   };
 
   <View
