@@ -163,7 +163,7 @@ let%component main = () => {
     | StartMenu => <StartMenu start=startCountdown />
     | Countdown => <Countdown count countdown start />
     | CharToNum => <CharToNum letter number length />
-    | GameOver => <GameOver score bestScore restart=startCountdown />
+    | GameOver => <GameOver score bestScore restart=startCountdown letter letterNumber />
     };
 
   <View

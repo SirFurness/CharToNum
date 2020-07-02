@@ -2,13 +2,18 @@ open Revery;
 open Revery.UI;
 open Revery.UI.Components;
 
-let make = (~score, ~bestScore, ~restart, ()) => {
+let make = (~score, ~bestScore, ~restart, ~letter, ~letterNumber, ()) => {
   <FadeIn>
     <View style=Style.[flexDirection(`Column), alignItems(`Center)]>
       <Text
         text="Game Over"
         fontSize=80.
         style=Style.[color(Theme.red), marginTop(30)]
+      />
+      <Text
+        text={letter ++ " is " ++ string_of_int(letterNumber)}
+        fontSize=30.
+        style=Style.[color(Theme.red), marginTop(8)]
       />
       <Text
         text={"Score: " ++ string_of_int(score)}
@@ -24,7 +29,7 @@ let make = (~score, ~bestScore, ~restart, ()) => {
         <Text
           text="Restart"
           fontSize=80.
-          style=Style.[color(Theme.blue), marginTop(150)]
+          style=Style.[color(Theme.blue), marginTop(90)]
         />
       </Clickable>
     </View>
