@@ -1,7 +1,7 @@
 type t = {
-	count: int,
+  count: int,
 }
 
 let initial = {
-	count: 3,
+  count: 3,
 }

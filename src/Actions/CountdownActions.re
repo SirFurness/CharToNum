@@ -1,3 +1,3 @@
 type action =
-	| Init
-	| DecreaseCountdown;
+  | Init
+  | DecreaseCountdown;

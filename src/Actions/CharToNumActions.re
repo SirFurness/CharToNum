@@ -1,6 +1,6 @@
 type action =
-	| Init
-	| DigitPressed(int)
-	| DeletePressed
-	| CorrectGuess
-	| NewLength(float);
+  | Init
+  | DigitPressed(int)
+  | DeletePressed
+  | CorrectGuess
+  | NewLength(float);

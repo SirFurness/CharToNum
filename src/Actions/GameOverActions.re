@@ -1,2 +1,2 @@
 type action =
-	| Init(int, string, int);
+  | Init(int, string, int);
