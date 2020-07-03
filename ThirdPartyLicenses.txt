@@ -1,3 +1,5 @@
+CharToNum depends on Revery whose license is as follows:
+
 MIT License
 
 Copyright (c) 2020 Bryan Phelps
