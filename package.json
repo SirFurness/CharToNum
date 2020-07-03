@@ -1,21 +1,20 @@
 {
-  "name": "revery-quick-start",
-  "version": "1.4.1",
-  "description": "A template for getting started with Revery",
-  "license": "MIT",
+  "name": "CharToNum",
+  "version": "1.0",
+  "description": "A simple game of letters and speed.",
   "scripts": {
     "format": "bash -c \"refmt --in-place **/*.re\"",
-    "run": "esy x App"
+    "run": "esy x CharToNum"
   },
   "esy": {
-    "build": "refmterr dune build -p App",
+    "build": "refmterr dune build -p CharToNum",
     "buildsInSource": "_build"
   },
   "revery-packager": {
-    "bundleName": "ExampleApp",
-    "bundleId": "com.example.app",
-    "displayName": "Revery Example App",
-    "mainExecutable": "App",
+    "bundleName": "CharToNum",
+    "bundleId": "com.eric.chartonum",
+    "displayName": "CharToNum",
+    "mainExecutable": "CharToNum",
     "windows": {
       "packages": [
         "zip"

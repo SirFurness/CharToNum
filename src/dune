@@ -1,6 +1,6 @@
 (executable
     (name App)
-    (package App)
+    (package CharToNum)
     (preprocess (pps brisk-reconciler.ppx))
-    (public_name App)
+    (public_name CharToNum)
     (libraries Revery Views Component_Utils Reducer State Actions))
