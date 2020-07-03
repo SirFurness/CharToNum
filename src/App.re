@@ -4,10 +4,6 @@ open Revery.UI.Components;
 open Views;
 open Component_Utils;
 
-type countdownAction =
-  | Reset
-  | Countdown;
-
 let main = (~state: State.t, ~dispatch: Actions.t => unit, ()) => {
   let onDigit = digit => {
     dispatch(CharToNum(DigitPressed(digit)));
