@@ -1,0 +1,4 @@
+(library
+	(name Views)
+	(libraries Revery Component_Utils State Reducer Actions)
+    (preprocess (pps brisk-reconciler.ppx)))

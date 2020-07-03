@@ -1,8 +1,11 @@
 open Revery;
 open Revery.UI;
 open Revery.UI.Components;
+open Component_Utils;
 
-let make = (~score, ~bestScore, ~restart, ~letter, ~letterNumber, ()) => {
+let make = (~state, ~dispatch, ()) => {
+  let State.GameOverState.{score, bestScore, letter, letterNumber} = state;
+  
   <FadeIn>
     <View style=Style.[flexDirection(`Column), alignItems(`Center)]>
       <Text
@@ -25,7 +28,7 @@ let make = (~score, ~bestScore, ~restart, ~letter, ~letterNumber, ()) => {
         fontSize=30.
         style=Style.[color(Theme.green), marginTop(8)]
       />
-      <Clickable onClick=restart>
+      <Clickable onClick={() => dispatch(Actions.BeginCountdown)}>
         <Text
           text="Restart"
           fontSize=80.

@@ -1,8 +1,9 @@
 open Revery;
 open Revery.UI;
 open Revery.UI.Components;
+open Component_Utils;
 
-let make = (~start, ()) => {
+let make = (~dispatch, ()) => {
   <FadeIn>
     <Center>
       <Text
@@ -15,7 +16,7 @@ let make = (~start, ()) => {
         fontSize=30.
         style=Style.[color(Theme.gray), marginBottom(50)]
       />
-      <Clickable onClick=start>
+      <Clickable onClick={() => dispatch(Actions.BeginCountdown)}>
         <Text text="Start" fontSize=80. style=Style.[color(Theme.blue)] />
       </Clickable>
     </Center>

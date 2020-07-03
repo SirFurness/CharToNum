@@ -1,15 +1,16 @@
 open Revery;
 open Revery.UI;
 open Revery.UI.Components;
+open Actions;
+open Component_Utils;
 
-type action =
-  | UpdateTime;
+let%component make = (~state, ~dispatch, ()) => {
+  let%hook () = Hooks.tick(~tickRate=Time.ms(1000), (_dt) => dispatch(Countdown(CountdownActions.DecreaseCountdown)));
 
-let%component make = (~count, ~countdown, ~start, ()) => {
-  let%hook () = Hooks.tick(countdown);
+  let State.CountdownState.{count} = state;
 
   if (count <= 0) {
-    start();
+    dispatch(Start);
   };
 
   let count =

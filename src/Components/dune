@@ -1,0 +1,4 @@
+(library
+	(name Component_Utils)
+    (preprocess (pps brisk-reconciler.ppx))
+	(libraries Revery))
