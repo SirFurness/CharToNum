@@ -25,7 +25,6 @@ let deleteDigit = (prev) => {
   }
 }
 
-// The letter shown
 let getRandomLetter = () => {
   String.make(1, Char.chr(Random.int(26) + Char.code('A')));
 };
